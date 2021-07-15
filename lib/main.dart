@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:wallpaper_app/app/modules/home/view/homepage.dart';
 
 void main() {
   runApp(MyApp());
@@ -7,11 +9,9 @@ void main() {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.red,
-      ),
+    return GetMaterialApp(
+      title: 'Edit Image',
+      home: HomePage(),
     );
   }
 }
