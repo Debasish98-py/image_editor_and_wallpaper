@@ -34,13 +34,25 @@ class ImageEditor extends StatelessWidget {
                   _editor.imgAdjustment();
                 },
               ),
+              IconButton(
+                icon: Icon(Icons.rotate_left),
+                onPressed: () {
+                  _editor.imgRotateLeft();
+                },
+              ),
+              IconButton(
+                icon: Icon(Icons.rotate_right),
+                onPressed: () {
+                  _editor.imgRotateRight();
+                },
+              ),
             ],
           ),
           body: SafeArea(
             child: Container(
               child: Screenshot(
                 controller: screenshotController,
-                child: RotatedBox(
+                child: Obx(() => RotatedBox(
                   quarterTurns: _editor.rotateValue,
                   child: Obx(
                     () => imageFilterLatest(
@@ -69,7 +81,7 @@ class ImageEditor extends StatelessWidget {
                       ),
                     ),
                   ),
-                ),
+                ),),
               ),
             ),
           ),

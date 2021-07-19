@@ -14,8 +14,8 @@ class SharedController extends GetxController {
 
   double opacityValue = 0;
   double flipValue = 0;
-  int rotateValue = 0;
-
+  Rx<int> _rotate = Rx<int>(0);
+  int get rotateValue => _rotate.value;
   Rx<double> _blur = Rx<double>(0.0);
   double get blur => _blur.value;
   Rx<double> _hue = Rx<double>(0.0);
@@ -175,5 +175,12 @@ class SharedController extends GetxController {
         ),
       ),
     );
+  }
+
+  imgRotateLeft(){
+      _rotate.value--;
+  }
+  imgRotateRight(){
+      _rotate.value++;
   }
 }
