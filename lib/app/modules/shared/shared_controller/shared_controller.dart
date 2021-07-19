@@ -12,13 +12,18 @@ class SharedController extends GetxController {
   var imgHeight;
   var imgWidth;
 
+  double opacityValue = 0;
   double flipValue = 0;
   int rotateValue = 0;
-  double blurValue = 0;
-  double opacityValue = 0;
-  double hueValue = 0;
-  double brightnessValue = 0;
-  double saturationValue = 0;
+
+  Rx<double> _blur = Rx<double>(0.0);
+  double get blur => _blur.value;
+  Rx<double> _hue = Rx<double>(0.0);
+  double get hueValue => _hue.value;
+  Rx<double> _brightness = Rx<double>(0.0);
+  double get brightnessValue => _brightness.value;
+  Rx<double> _saturation = Rx<double>(0.0);
+  double get saturationValue => _saturation.value;
 
   Future editImage() {
     return Get.to(() => ImageEditorPro(
@@ -44,6 +49,8 @@ class SharedController extends GetxController {
       image = File(galImg.path);
       imgHeight = decodedGalImg.height;
       imgWidth = decodedGalImg.width;
+    }else{
+      Get.snackbar("Error", "No image selected");
     }
   }
 
@@ -59,5 +66,114 @@ class SharedController extends GetxController {
     }
   }
 
+  Future imgBlur() {
+    return Get.bottomSheet(
+      Container(
+        color: Colors.white,
+        padding: EdgeInsets.all(14),
+        child: Center(
+          child: Column(
+            children: [
+              Text(
+                "Set image blur",
+                style: TextStyle(color: Colors.white),
+              ),
+              Divider(),
+              StatefulBuilder(
+                builder: (BuildContext context, StateSetter setState) {
+                  return Slider(
+                    activeColor: Colors.blue,
+                    inactiveColor: Colors.red,
+                    value: blur,
+                    min: 0,
+                    max: 10,
+                    onChanged: (v) {
+                      setState(() {
+                        _blur.value = v;
+                      });
+                      print(blur);
+                    },
+                  );
+                },
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
 
+  Future imgAdjustment(){
+    return Get.bottomSheet(
+      Container(
+        color: Colors.grey,
+        padding: EdgeInsets.all(14),
+        child: Center(
+          child: Column(
+            children: [
+              Text(
+                "Set image filters",
+                style: TextStyle(color: Colors.white),
+              ),
+              Divider(),
+              Text("Adjust brightness"),
+              StatefulBuilder(
+                builder: (BuildContext context, StateSetter setState) {
+                  return Slider(
+                    activeColor: Colors.white,
+                    inactiveColor: Colors.grey,
+                    value: brightnessValue,
+                    min: 0,
+                    max: 1,
+                    onChanged: (v) {
+                      setState(() {
+                        _brightness.value = v;
+                      });
+                      print(brightnessValue);
+                    },
+                  );
+                },
+              ),
+              Text("Adjust saturation"),
+              StatefulBuilder(
+                builder: (BuildContext context, StateSetter setState) {
+                  return Slider(
+                    activeColor: Colors.white,
+                    inactiveColor: Colors.grey,
+                    value: saturationValue,
+                    min: -10,
+                    max: 10,
+                    onChanged: (v) {
+                      setState(() {
+                        _saturation.value = v;
+                      });
+                      print(saturationValue);
+                    },
+                  );
+                },
+              ),
+              Text("Adjust hue"),
+              StatefulBuilder(
+                builder: (BuildContext context, StateSetter setState) {
+                  return Slider(
+                    activeColor: Colors.white,
+                    inactiveColor: Colors.grey,
+                    value: hueValue,
+                    min: -10,
+                    max: 10,
+                    onChanged: (v) {
+                      setState(() {
+                        _hue.value = v;
+                      });
+                      print(hueValue);
+                    },
+                  );
+                },
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
 }
